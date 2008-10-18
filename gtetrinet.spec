@@ -1,11 +1,7 @@
-# $Id: gtetrinet.spec,v 1.1 2008/10/18 14:00:54 thl Exp $
-# Authority: matthias
-# Upstream: Ka-shu Wong <kswong$zip,com,au>
-
 Summary: GNOME version of a tetris game playable on the net
 Name: gtetrinet
 Version: 0.7.11
-Release: 2.fc7
+Release: 2%{?dist}
 License: GPL
 Group: Amusements/Games
 URL: http://gtetrinet.sourceforge.net/
@@ -60,7 +56,7 @@ is, check out tetrinet.org)
 
 
 %changelog
-* Sat Oct 18 2008 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info - 0.7.11-2.fc7
+* Sat Oct 18 2008 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info - 0.7.11-2
 - rebuild for RPM Fusion
 
 * Sun Dec 10 2006 Dag Wieers <dag@wieers.com> - 0.7.11-1
