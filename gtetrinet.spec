@@ -1,16 +1,20 @@
 Summary: GNOME version of a tetris game playable on the net
 Name: gtetrinet
 Version: 0.7.11
-Release: 2%{?dist}
-License: GPL
+Release: 3%{?dist}
+License: GPLv2+
 Group: Amusements/Games
 URL: http://gtetrinet.sourceforge.net/
 Source0: http://ftp.gnome.org/pub/GNOME/sources/gtetrinet/0.7/gtetrinet-%{version}.tar.bz2
 Source1: tetrinet.txt
 Source2: http://www.mavit.pwp.blueyonder.co.uk/mmr-sounds-1.0.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
-Requires: libgnome >= 2.0.0, libgnomeui >= 2.0.0
-BuildRequires: gtk2-devel >= 2.6.0, libgnome-devel >= 2.0.0, libgnomeui-devel >= 2.0.0, GConf2-devel
+Requires: libgnome >= 2.0.0
+Requires: libgnomeui >= 2.0.0
+BuildRequires: gtk2-devel >= 2.6.0
+BuildRequires: libgnome-devel >= 2.0.0
+BuildRequires: libgnomeui-devel >= 2.0.0
+BuildRequires: GConf2-devel
 BuildRequires: gettext, perl(XML::Parser)
 
 %description
@@ -20,23 +24,22 @@ is, check out tetrinet.org)
 
 
 %prep
-%setup
+%setup -q
 
 
 %build
 %configure --disable-dependency-tracking
 %{__make} %{?_smp_mflags}
-# Fix the desktop entry
-%{__perl} -pi -e 's|Exec=%{name}|Exec=%{_prefix}/games/%{name}|g' \
-    %{name}.desktop
 
 
 %install
 %{__rm} -rf %{buildroot}
-%makeinstall GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1
+%{__make} install DESTDIR=%{buildroot} \
+    GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1 \
+    gamesdir=%{_bindir}
 %find_lang %{name}
 %{__cp} -ap %{SOURCE1} .
-%{__tar} -xzvf %{SOURCE2} -C %{buildroot}/%{_datadir}/gtetrinet/themes/
+%{__tar} -xzvf %{SOURCE2} -C %{buildroot}%{_datadir}/gtetrinet/themes/
 
 
 %clean
@@ -44,18 +47,22 @@ is, check out tetrinet.org)
 
 
 %files -f %{name}.lang
-%defattr(-, root, root, 0755)
+%defattr(-,root,root,-)
 %doc AUTHORS COPYING ChangeLog NEWS README tetrinet.txt
-%config %{_sysconfdir}/gconf/schemas/%{name}.schemas
-%{_prefix}/games/%{name}
-%{_datadir}/applications/%{name}.desktop
-%{_datadir}/%{name}
-%{_datadir}/pixmaps/%{name}
-%{_datadir}/pixmaps/%{name}.png
-%{_mandir}/man6/%{name}.6*
+%config %{_sysconfdir}/gconf/schemas/gtetrinet.schemas
+%{_bindir}/gtetrinet
+%{_datadir}/applications/gtetrinet.desktop
+%{_datadir}/gtetrinet/
+%{_datadir}/pixmaps/gtetrinet/
+%{_datadir}/pixmaps/gtetrinet.png
+%{_mandir}/man6/gtetrinet.6*
 
 
 %changelog
+* Sun Dec 28 2008 Matthias Saou <http://freshrpms.net/> 0.7.11-3
+- Minor spec file cleanups.
+- Move binary back to _bindir (#279).
+
 * Sat Oct 18 2008 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info - 0.7.11-2
 - rebuild for RPM Fusion
 
