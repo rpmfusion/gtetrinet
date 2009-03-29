@@ -1,7 +1,7 @@
 Summary: GNOME version of a tetris game playable on the net
 Name: gtetrinet
 Version: 0.7.11
-Release: 3%{?dist}
+Release: 4%{?dist}
 License: GPLv2+
 Group: Amusements/Games
 URL: http://gtetrinet.sourceforge.net/
@@ -59,6 +59,9 @@ is, check out tetrinet.org)
 
 
 %changelog
+* Sun Mar 29 2009 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 0.7.11-4
+- rebuild for new F11 features
+
 * Sun Dec 28 2008 Matthias Saou <http://freshrpms.net/> 0.7.11-3
 - Minor spec file cleanups.
 - Move binary back to _bindir (#279).
