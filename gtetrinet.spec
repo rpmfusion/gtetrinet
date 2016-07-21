@@ -1,13 +1,14 @@
 Summary: GNOME version of a tetris game playable on the net
 Name: gtetrinet
 Version: 0.7.11
-Release: 7%{?dist}
+Release: 8%{?dist}
 License: GPLv2+
 Group: Amusements/Games
 URL: http://gtetrinet.sourceforge.net/
 Source0: http://ftp.gnome.org/pub/GNOME/sources/gtetrinet/0.7/gtetrinet-%{version}.tar.bz2
 Source1: tetrinet.txt
 Source2: http://www.mavit.pwp.blueyonder.co.uk/mmr-sounds-1.0.tar.gz
+Patch1: gtetrinet-0.7.11-format-security.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 Requires: libgnome >= 2.0.0
 Requires: libgnomeui >= 2.0.0
@@ -25,6 +26,7 @@ is, check out tetrinet.org)
 
 %prep
 %setup -q
+%patch1 -p1
 
 
 %build
@@ -59,6 +61,9 @@ is, check out tetrinet.org)
 
 
 %changelog
+* Sun May 10 2015 Sérgio Basto <sergio@serjux.com> - 0.7.11-8
+- Fix FTBFS on F22, rfbz #3632
+
 * Sun Aug 31 2014 Sérgio Basto <sergio@serjux.com> - 0.7.11-7
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_22_Mass_Rebuild
 
@@ -143,7 +148,7 @@ is, check out tetrinet.org)
 - Rebuilt against Red Hat Linux 7.3.
 - Added the %%{?_smp_mflags} expansion.
 
-* Wed Apr 26 2001 Matthias Saou <http://freshrpms.net/>
+* Wed Apr 25 2001 Matthias Saou <http://freshrpms.net/>
 - Spec file cleanup and rebuilt for Red Hat 7.1.
 - I think this was one of my first RPMs ;-)
 

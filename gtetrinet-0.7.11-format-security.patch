@@ -1,0 +1,11 @@
+--- gtetrinet-0.7.11.orig/src/tetrinet.c	2006-09-02 11:59:13.000000000 +0100
++++ gtetrinet-0.7.11/src/tetrinet.c	2015-05-10 23:00:33.492201857 +0100
+@@ -232,7 +232,7 @@ void tetrinet_inmessage (enum inmsg_type
+             dialog = gtk_message_dialog_new (NULL, GTK_DIALOG_MODAL,
+                                              GTK_MESSAGE_ERROR,
+                                              GTK_BUTTONS_OK,
+-                                             buf);
++                                             "%s", buf);
+             gtk_dialog_run (GTK_DIALOG(dialog));
+             gtk_widget_destroy (dialog);
+             g_free (data_utf8);
