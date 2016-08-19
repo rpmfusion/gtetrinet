@@ -1,22 +1,26 @@
 Summary: GNOME version of a tetris game playable on the net
 Name: gtetrinet
 Version: 0.7.11
-Release: 8%{?dist}
+Release: 9%{?dist}
 License: GPLv2+
 Group: Amusements/Games
 URL: http://gtetrinet.sourceforge.net/
-Source0: http://ftp.gnome.org/pub/GNOME/sources/gtetrinet/0.7/gtetrinet-%{version}.tar.bz2
+Source0: https://github.com/GNOME/gtetrinet/archive/GTETRINET_0_7_11/gtetrinet-GTETRINET_0_7_11.tar.gz
 Source1: tetrinet.txt
 Source2: http://www.mavit.pwp.blueyonder.co.uk/mmr-sounds-1.0.tar.gz
-Patch1: gtetrinet-0.7.11-format-security.patch
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
-Requires: libgnome >= 2.0.0
-Requires: libgnomeui >= 2.0.0
-BuildRequires: gtk2-devel >= 2.6.0
+Patch1: GTETRINET_0_7_11...master.diff
+#Patch2: master...stump:master.diff
+Patch2: master...stump:12cec675f4354d585ef754813b79695db30a8b1e.diff
+Patch3: gtetrinet-intl.patch
+
+BuildRequires: gtk2-devel >= 2.18.0
+BuildRequires: glib2-devel >= 2.32.0
 BuildRequires: libgnome-devel >= 2.0.0
 BuildRequires: libgnomeui-devel >= 2.0.0
-BuildRequires: GConf2-devel
-BuildRequires: gettext, perl(XML::Parser)
+#BuildRequires: esound-devel
+BuildRequires: libcanberra-devel
+BuildRequires: autoconf automake libtool gettext-devel intltool
+BuildRequires: perl(XML::Parser)
 
 %description
 GTetrinet is a client program for the popular Tetrinet game, a multiplayer
@@ -25,32 +29,27 @@ is, check out tetrinet.org)
 
 
 %prep
-%setup -q
-%patch1 -p1
-
+%autosetup -p1 -n gtetrinet-GTETRINET_0_7_11
 
 %build
-%configure --disable-dependency-tracking
-%{__make} %{?_smp_mflags}
+mkdir m4
+autoreconf -i 
+intltoolize
+%configure --disable-dependency-tracking --enable-ipv6
+%make_build
 
 
 %install
-%{__rm} -rf %{buildroot}
-%{__make} install DESTDIR=%{buildroot} \
-    GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1 \
+%make_install GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1 \
     gamesdir=%{_bindir}
 %find_lang %{name}
 %{__cp} -ap %{SOURCE1} .
 %{__tar} -xzvf %{SOURCE2} -C %{buildroot}%{_datadir}/gtetrinet/themes/
 
 
-%clean
-%{__rm} -rf %{buildroot}
-
-
 %files -f %{name}.lang
-%defattr(-,root,root,-)
-%doc AUTHORS COPYING ChangeLog NEWS README tetrinet.txt
+%doc AUTHORS ChangeLog NEWS README tetrinet.txt
+%license COPYING
 %config %{_sysconfdir}/gconf/schemas/gtetrinet.schemas
 %{_bindir}/gtetrinet
 %{_datadir}/applications/gtetrinet.desktop
@@ -61,6 +60,14 @@ is, check out tetrinet.org)
 
 
 %changelog
+* Thu Aug 18 2016 Sérgio Basto <sergio@serjux.com> - 0.7.11-9
+- Clean spec, add license tag
+- Switch to github sources 
+- Add patch to update to git master 
+- Add patch from fork of user stump, but removed last 3 commits, they break menu
+  translations.
+- Use autoreconf and libtoolize
+
 * Sun May 10 2015 Sérgio Basto <sergio@serjux.com> - 0.7.11-8
 - Fix FTBFS on F22, rfbz #3632
 
