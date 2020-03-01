@@ -8,6 +8,7 @@ URL: http://gtetrinet.sourceforge.net/
 Source0: https://github.com/stump/gtetrinet/archive/GTETRINET_0_7_11/gtetrinet-GTETRINET_0_7_11.tar.gz
 Source1: tetrinet.txt
 Source2: http://www.mavit.pwp.blueyonder.co.uk/mmr-sounds-1.0.tar.gz
+Source3: %{name}.appdata.xml
 # Fork of user stump, but removed last 3 commits, they break translations in menus.
 Patch2: https://github.com/stump/gtetrinet/compare/GTETRINET_0_7_11...12cec675f4354d585ef754813b79695db30a8b1e.diff
 
@@ -44,6 +45,7 @@ mkdir m4
 %find_lang %{name}
 %{__cp} -ap %{SOURCE1} .
 %{__tar} -xzvf %{SOURCE2} -C %{buildroot}%{_datadir}/gtetrinet/themes/
+install -m 0644 -D %{SOURCE3} %{buildroot}%{_metainfodir}/%{name}.appdata.xml
 
 
 %files -f %{name}.lang
@@ -56,11 +58,14 @@ mkdir m4
 %{_datadir}/pixmaps/gtetrinet/
 %{_datadir}/pixmaps/gtetrinet.png
 %{_mandir}/man6/gtetrinet.6*
+%{_metainfodir}/%{name}.appdata.xml
 
 
 %changelog
 * Sun Mar 01 2020 Sérgio Basto <sergio@serjux.com> - 0.7.11-17
 - Update gtetrinet.spec and his patches
+- Add appdata file, copied from
+  https://github.com/sanjayankur31/rpmfusion-appdata
 
 * Tue Feb 04 2020 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 0.7.11-16
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
