@@ -1,26 +1,26 @@
 Summary: GNOME version of a tetris game playable on the net
 Name: gtetrinet
 Version: 0.7.11
-Release: 16%{?dist}
+Release: 17%{?dist}
 License: GPLv2+
 Group: Amusements/Games
 URL: http://gtetrinet.sourceforge.net/
-Source0: https://github.com/GNOME/gtetrinet/archive/GTETRINET_0_7_11/gtetrinet-GTETRINET_0_7_11.tar.gz
+Source0: https://github.com/stump/gtetrinet/archive/GTETRINET_0_7_11/gtetrinet-GTETRINET_0_7_11.tar.gz
 Source1: tetrinet.txt
 Source2: http://www.mavit.pwp.blueyonder.co.uk/mmr-sounds-1.0.tar.gz
-Patch1: GTETRINET_0_7_11...master.diff
-#Patch2: master...stump:master.diff
-Patch2: master...stump:12cec675f4354d585ef754813b79695db30a8b1e.diff
-Patch3: gtetrinet-intl.patch
+# Fork of user stump, but removed last 3 commits, they break translations in menus.
+Patch2: https://github.com/stump/gtetrinet/compare/GTETRINET_0_7_11...12cec675f4354d585ef754813b79695db30a8b1e.diff
 
 BuildRequires: gtk2-devel >= 2.18.0
 BuildRequires: glib2-devel >= 2.32.0
 BuildRequires: libgnome-devel >= 2.0.0
 BuildRequires: libgnomeui-devel >= 2.0.0
-#BuildRequires: esound-devel
+BuildRequires: esound-devel
 BuildRequires: libcanberra-devel
 BuildRequires: autoconf automake libtool gettext-devel intltool
 BuildRequires: perl(XML::Parser)
+
+Recommends: tetrinetx
 
 %description
 GTetrinet is a client program for the popular Tetrinet game, a multiplayer
@@ -33,8 +33,7 @@ is, check out tetrinet.org)
 
 %build
 mkdir m4
-autoreconf -i 
-intltoolize
+./autogen.sh
 %configure --disable-dependency-tracking --enable-ipv6
 %make_build
 
@@ -60,6 +59,9 @@ intltoolize
 
 
 %changelog
+* Sun Mar 01 2020 Sérgio Basto <sergio@serjux.com> - 0.7.11-17
+- Update gtetrinet.spec and his patches
+
 * Tue Feb 04 2020 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 0.7.11-16
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
 
