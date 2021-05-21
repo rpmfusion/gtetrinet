@@ -1,25 +1,29 @@
+%global commit 09e8db1c1681704d7c21d5dda77c0623c5102705
+%global shortcommit %(c=%{commit}; echo ${c:0:7})
+%global gitdate 20210107
+
 Summary: GNOME version of a tetris game playable on the net
 Name: gtetrinet
 Version: 0.7.11
-Release: 19%{?dist}
+Release: 20.%{gitdate}.git%{shortcommit}%{?dist}
 License: GPLv2+
 Group: Amusements/Games
 URL: http://gtetrinet.sourceforge.net/
-Source0: https://github.com/stump/gtetrinet/archive/GTETRINET_0_7_11/gtetrinet-GTETRINET_0_7_11.tar.gz
+Source0: https://github.com/tatankat/gtetrinet/archive/%{commit}/gtetrinet-%{shortcommit}.tar.gz
 Source1: tetrinet.txt
 Source2: http://www.mavit.pwp.blueyonder.co.uk/mmr-sounds-1.0.tar.gz
 Source3: %{name}.appdata.xml
-# Fork of user stump, but removed last 3 commits, they break translations in menus.
-Patch2: https://github.com/stump/gtetrinet/compare/GTETRINET_0_7_11...12cec675f4354d585ef754813b79695db30a8b1e.diff
 
-BuildRequires: gtk2-devel >= 2.18.0
+BuildRequires: gcc
+BuildRequires: make
+BuildRequires: gtk3-devel
 BuildRequires: glib2-devel >= 2.32.0
-BuildRequires: libgnome-devel >= 2.0.0
-BuildRequires: libgnomeui-devel >= 2.0.0
-BuildRequires: esound-devel
+#BuildRequires: libgnome-devel >= 2.0.0
+#BuildRequires: libgnomeui-devel >= 2.0.0
 BuildRequires: libcanberra-devel
-BuildRequires: autoconf automake libtool gettext-devel intltool
-BuildRequires: perl(XML::Parser)
+BuildRequires: autoconf automake libtool gettext-devel
+BuildREquires: popt-devel
+#BuildRequires: perl(XML::Parser)
 
 Recommends: tetrinetx
 
@@ -30,38 +34,40 @@ is, check out tetrinet.org)
 
 
 %prep
-%autosetup -p1 -n gtetrinet-GTETRINET_0_7_11
+%autosetup -p1 -n gtetrinet-%{commit}
 
 %build
-mkdir m4
-./autogen.sh
-%configure --disable-dependency-tracking --enable-ipv6
+autoreconf --install --verbose
+%configure
 %make_build
 
 
 %install
-%make_install GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1 \
-    gamesdir=%{_bindir}
-%find_lang %{name}
+%make_install
+
+%find_lang %{name} --with-gnome
 %{__cp} -ap %{SOURCE1} .
 %{__tar} -xzvf %{SOURCE2} -C %{buildroot}%{_datadir}/gtetrinet/themes/
 install -m 0644 -D %{SOURCE3} %{buildroot}%{_metainfodir}/%{name}.appdata.xml
 
 
 %files -f %{name}.lang
-%doc AUTHORS ChangeLog NEWS README tetrinet.txt
+%doc AUTHORS ChangeLog NEWS README.md tetrinet.txt
 %license COPYING
-%config %{_sysconfdir}/gconf/schemas/gtetrinet.schemas
 %{_bindir}/gtetrinet
 %{_datadir}/applications/gtetrinet.desktop
 %{_datadir}/gtetrinet/
 %{_datadir}/pixmaps/gtetrinet/
 %{_datadir}/pixmaps/gtetrinet.png
 %{_mandir}/man6/gtetrinet.6*
+%{_datadir}/glib-2.0/schemas/*.xml
 %{_metainfodir}/%{name}.appdata.xml
 
 
 %changelog
+* Thu May 20 2021 Sérgio Basto <sergio@serjux.com> - 0.7.11-20
+- Change to fork of user tatankat which have gtk3 support
+
 * Wed Feb 03 2021 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 0.7.11-19
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
 
