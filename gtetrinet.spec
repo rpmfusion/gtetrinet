@@ -1,3 +1,5 @@
+%global build_type_safety_c 0
+
 %global commit 09e8db1c1681704d7c21d5dda77c0623c5102705
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 %global gitdate 20210107
@@ -67,6 +69,7 @@ install -m 0644 -D %{SOURCE3} %{buildroot}%{_metainfodir}/%{name}.appdata.xml
 %changelog
 * Sat Feb 03 2024 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 0.7.11-25.20210107.git09e8db1
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_40_Mass_Rebuild
+- Disable type safety check, referenced in https://fedoraproject.org/wiki/Changes/PortingToModernC#Use_of_incompatible_pointer_types_without_a_cast
 
 * Wed Aug 02 2023 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 0.7.11-24.20210107.git09e8db1
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_39_Mass_Rebuild
