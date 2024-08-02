@@ -7,7 +7,7 @@
 Summary: GNOME version of a tetris game playable on the net
 Name: gtetrinet
 Version: 0.7.11
-Release: 25.%{gitdate}.git%{shortcommit}%{?dist}
+Release: 26.%{gitdate}.git%{shortcommit}%{?dist}
 License: GPLv2+
 Group: Amusements/Games
 URL: http://gtetrinet.sourceforge.net/
@@ -67,6 +67,9 @@ install -m 0644 -D %{SOURCE3} %{buildroot}%{_metainfodir}/%{name}.appdata.xml
 
 
 %changelog
+* Fri Aug 02 2024 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 0.7.11-26.20210107.git09e8db1
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_41_Mass_Rebuild
+
 * Sat Feb 03 2024 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 0.7.11-25.20210107.git09e8db1
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_40_Mass_Rebuild
 - Disable type safety check, referenced in https://fedoraproject.org/wiki/Changes/PortingToModernC#Use_of_incompatible_pointer_types_without_a_cast
