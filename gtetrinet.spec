@@ -7,7 +7,7 @@
 Summary: GNOME version of a tetris game playable on the net
 Name: gtetrinet
 Version: 0.7.11
-Release: 27.%{gitdate}.git%{shortcommit}%{?dist}
+Release: 28.%{gitdate}.git%{shortcommit}%{?dist}
 License: GPLv2+
 Group: Amusements/Games
 URL: http://gtetrinet.sourceforge.net/
@@ -67,6 +67,9 @@ install -m 0644 -D %{SOURCE3} %{buildroot}%{_metainfodir}/%{name}.appdata.xml
 
 
 %changelog
+* Tue Jan 28 2025 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 0.7.11-28.20220828.git6d816ee
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_42_Mass_Rebuild
+
 * Fri Jan 10 2025 Sérgio Basto <sergio@serjux.com> - 0.7.11-27.20220828.git6d816ee
 - As wrote in "Controlling Type Safety" of https://src.fedoraproject.org/rpms/redhat-rpm-config/blob/rawhide/f/buildflags.md
   I verified that we can use level 2
