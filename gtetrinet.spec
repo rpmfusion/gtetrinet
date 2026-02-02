@@ -5,7 +5,7 @@
 Summary: GNOME version of a tetris game playable on the net
 Name: gtetrinet
 Version: 0.7.11
-Release: 30.%{gitdate}.git%{shortcommit}%{?dist}
+Release: 31.%{gitdate}.git%{shortcommit}%{?dist}
 License: GPLv2+
 Group: Amusements/Games
 URL: http://gtetrinet.sourceforge.net/
@@ -66,6 +66,9 @@ install -m 0644 -D %{SOURCE3} %{buildroot}%{_metainfodir}/%{name}.appdata.xml
 
 
 %changelog
+* Mon Feb 02 2026 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 0.7.11-31.20220828.git6d816ee
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_44_Mass_Rebuild
+
 * Sun Jul 27 2025 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 0.7.11-30.20220828.git6d816ee
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_43_Mass_Rebuild
 
